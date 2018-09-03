@@ -28,27 +28,7 @@
         {$layoutShowSidebar = !!$layoutSidebarBlocks}
     {/if}
 
-    {**
-     * Тип сетки сайта
-     *}
-    {if {Config::Get('view.grid.type')} == 'fluid'}
-        <style>
-            .layout-userbar,
-            .layout-nav .ls-nav--main,
-            .layout-header .ls-jumbotron-inner,
-            .layout-container {
-                min-width: {Config::Get('view.grid.fluid_min_width')};
-                max-width: {Config::Get('view.grid.fluid_max_width')};
-            }
-        </style>
-    {else}
-        <style>
-            .layout-userbar,
-            .layout-nav .ls-nav--main,
-            .layout-header .ls-jumbotron-inner,
-            .layout-container { width: {Config::Get('view.grid.fixed_width')}; }
-        </style>
-    {/if}
+    
 {/block}
 
 {block 'layout_body'}
@@ -57,19 +37,9 @@
     {**
      * Юзербар
      *}
-    {component 'userbar'}
+    {*component 'userbar'*}
 
 
-    {**
-     * Шапка
-     *}
-    {if Config::Get( 'view.layout_show_banner' )}
-        {component 'jumbotron'
-            title    = Config::Get('view.name')
-            subtitle = Config::Get('view.description')
-            titleUrl = {router page='/'}
-            classes  = 'layout-header'}
-    {/if}
 
 
     {**
@@ -77,12 +47,7 @@
      *}
     <nav class="ls-grid-row layout-nav">
         {block 'nav_main'}
-            {component 'nav' hook='main' activeItem=$sMenuHeadItemSelect mods='main' items=[
-                [ 'text' => $aLang.topic.topics,   'url' => {router page='/'},      'name' => 'blog' ],
-                [ 'text' => $aLang.blog.blogs,     'url' => {router page='blogs'},  'name' => 'blogs' ],
-                [ 'text' => $aLang.user.users,     'url' => {router page='people'}, 'name' => 'people' ],
-                [ 'text' => $aLang.activity.title, 'url' => {router page='stream'}, 'name' => 'stream' ]
-            ]}
+            
         {/block}
     </nav>
 
@@ -178,22 +143,22 @@
 
 
     {* Подключение модальных окон *}
-    {if $oUserCurrent}
+    {*if $oUserCurrent}
         {component 'tags-personal' template='modal'}
     {else}
         {component 'auth' template='modal'}
-    {/if}
+    {/if*}
 
 
     {**
      * Тулбар
      * Добавление кнопок в тулбар
      *}
-    {add_block group='toolbar' name='component@admin.toolbar.admin' priority=100}
-    {add_block group='toolbar' name='component@toolbar-scrollup.toolbar.scrollup' priority=-100}
+    {*add_block group='toolbar' name='component@admin.toolbar.admin' priority=100}
+    {add_block group='toolbar' name='component@toolbar-scrollup.toolbar.scrollup' priority=-100*}
 
     {* Подключение тулбара *}
-    {component 'toolbar' classes='js-toolbar-default' items={show_blocks group='toolbar'}}
+    {*component 'toolbar' classes='js-toolbar-default' items={show_blocks group='toolbar'}*}
 
     {hook run='layout_body_end'}
 {/block}
