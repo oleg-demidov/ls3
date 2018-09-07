@@ -241,44 +241,9 @@ jQuery(document).ready(function($){
 
 
     /**
-     * Активность
-     */
-    $('.js-activity--all').lsActivity({ urls: { more: aRouter.stream + 'get_more_all' } });
-    $('.js-activity--user').lsActivity({ urls: { more: aRouter.stream + 'get_more_user' } });
-    $('.js-activity--personal').lsActivity({
-        urls: {
-            more: aRouter.stream + 'get_more_personal'
-        },
-        create: function() {
-            // Настройки активности
-            $('.js-activity-settings').lsActivitySettings({
-                urls: {
-                    toggle_type: aRouter.stream + 'switchEventType'
-                }
-            });
-
-            // Добавление пользователей в персональную активность
-            $('.js-activity-users').lsUserListAdd({
-                urls: {
-                    add: aRouter.stream + 'ajaxadduser',
-                    remove: aRouter.stream + 'ajaxremoveuser',
-                    list: aRouter.ajax + 'modal-friend-list'
-                }
-            });
-        }
-    });
-
-
-    /**
      * Лента
      */
-    // Блоги
-    $('.js-feed-blogs').lsFeedBlogs({
-        urls: {
-            subscribe: aRouter.feed + 'subscribe',
-            unsubscribe: aRouter.feed + 'unsubscribe'
-        }
-    });
+   
 
     // Добавление пользователей в свою ленту
     $('.js-feed-users').lsUserListAdd({
@@ -295,60 +260,7 @@ jQuery(document).ready(function($){
      */
     ls.auth.init();
 
-    // Поиск
-    $( '.js-search-ajax-users' ).lsSearchAjax({
-        urls: {
-            search: aRouter.people + 'ajax-search/'
-        },
-        i18n: {
-            title: ls.lang.get( 'user.search.result_title' )
-        },
-        selectors: {
-            list: '.js-more-users-container',
-            more: '.js-more-search',
-            title: '@.js-user-list-search-title'
-        },
-        filters : [
-            {
-                type: 'text',
-                name: 'sText',
-                selector: '.js-search-text-main'
-            },
-            {
-                type: 'radio',
-                name: 'sex',
-                selector: '.js-search-ajax-user-sex'
-            },
-            {
-                type: 'checkbox',
-                name: 'is_online',
-                selector: '.js-search-ajax-user-online'
-            },
-            {
-                type: 'sort',
-                name: 'sort_by',
-                selector: '.js-search-sort-menu li'
-            },
-            {
-                type: 'select',
-                name: 'country',
-                selector: '.js-field-geo-country'
-            },
-            {
-                type: 'select',
-                name: 'region',
-                selector: '.js-field-geo-region'
-            },
-            {
-                type: 'select',
-                name: 'city',
-                selector: '.js-field-geo-city'
-            }
-        ],
-        afterupdate: function ( event, data ) {
-            data.context.getElement( 'more' ).lsMore( 'option', 'params.next_page', 2 );
-        }
-    });
+   
 
     // Добавление пользователя в свою активность
     $('.js-user-follow').lsUserFollow({
@@ -396,47 +308,7 @@ jQuery(document).ready(function($){
         }
     });
 
-    /**
-     * Talk
-     */
-    
-    $('.js-talk-list').lsTalkList();
-
-    // Выбор получателей в форме добавления
-    $('.js-talk-add-user-choose').lsUserFieldChoose({
-        urls: {
-            modal: aRouter.ajax + 'modal-friend-list'
-        }
-    });
-
-    // Форма поиска
-    $('.js-talk-search-form').lsDetails();
-
-    // Добавление диалога в избранное
-    $('.js-favourite-talk').lsFavourite({
-        urls: {
-            toggle: aRouter['ajax'] + 'favourite/talk/'
-        }
-    });
-
-    // Добавление в избранное на странице диалога
-    $('.js-talk-message-root-favourite').on('click', function (event) {
-        if (event.target == event.currentTarget) {
-            $(this).find('.js-favourite-talk').lsFavourite('toggle');
-        }
-    });
-
-    // Комментарии
-    $('.js-comments-talk').lsComments({
-        urls: {
-            add:  aRouter['talk'] + 'ajaxaddcomment/',
-            load: aRouter['talk'] + 'ajaxresponsecomment/'
-        }
-    });
-
-    // Управление участниками личного сообщения
-    $('.js-message-users').lsTalkUsers();
-
+ 
     // Черный список
     $('.js-user-list-add-blacklist').lsUserListAdd({
         urls: {
@@ -447,13 +319,6 @@ jQuery(document).ready(function($){
     });
 
 
-    /**
-     * Poll
-     */
-    $('.js-poll').lsPoll();
-    $('.js-poll-manage').lsPollManage({
-        max: ls.registry.get('poll_max_answers')
-    });
 
 
     /**
@@ -475,103 +340,7 @@ jQuery(document).ready(function($){
     $( '.js-editor-default' ).lsEditor();
 
 
-    /**
-     * Blog
-     */
-
-    // Форма добавления блога
-    $('.js-blog-add').lsBlogAdd();
-
-    // Приглашение пользователей в блог
-    $('.js-user-list-add-blog-invite').lsBlogInvites();
-
-    // Вступить/покинуть блог (список блогов)
-    $( '.js-blog-join' ).livequery(function() {
-        $( this ).lsBlogJoin({
-            urls: {
-                toggle: aRouter.blog + 'ajaxblogjoin'
-            },
-            classes: {
-                loading: ls.options.classes.states.loading
-            }
-        });
-    });
-
-    // Вступить/покинуть блог (страница блога)
-    $( '.js-blog-profile-join' ).lsBlogJoin({
-        urls: {
-            toggle: aRouter.blog + 'ajaxblogjoin'
-        },
-        selectors: {
-            text: 'a'
-        },
-        classes: {
-            active: 'active'
-        }
-    });
-
-    // Поиск
-    $( '.js-search-ajax-blog' ).lsSearchAjax({
-        urls: {
-            search: aRouter.blogs + 'ajax-search/'
-        },
-        i18n: {
-            title: ls.lang.get( 'blog.search.result_title' )
-        },
-        selectors: {
-            list: '.js-more-blogs-container',
-            more: '.js-more-search',
-            title: '@.js-blog-list-search-title'
-        },
-        filters : [
-            {
-                type: 'text',
-                name: 'sText',
-                selector: '.js-search-text-main'
-            },
-            {
-                type: 'radio',
-                name: 'type',
-                selector: '.js-search-ajax-blog-type'
-            },
-            {
-                type: 'radio',
-                name: 'relation',
-                selector: '.js-search-ajax-blog-relation'
-            },
-            {
-                type: 'list',
-                name: 'category',
-                selector: '#js-search-ajax-blog-category li'
-            },
-            {
-                type: 'sort',
-                name: 'sort_by',
-                selector: '.js-search-sort-menu li'
-            }
-        ],
-        afterupdate: function ( event, data ) {
-            data.context.getElement( 'more' ).lsMore( 'option', 'params.next_page', 2 );
-        }
-    });
-
-    // Аватар блога
-    $( '.js-blog-avatar' ).lsPhoto({
-        urls: {
-            upload: aRouter.blog + 'ajax/upload-avatar',
-            remove: aRouter.blog + 'ajax/remove-avatar',
-            crop_photo: aRouter.blog + 'ajax/modal-crop-avatar',
-            save_photo: aRouter.blog + 'ajax/crop-avatar',
-            cancel_photo: aRouter.blog + 'ajax/crop-cancel-avatar'
-        },
-        use_avatar: false,
-        crop_photo: {
-            minSize: [ 100, 100 ],
-            usePreview: true
-        }
-    });
-
-
+ 
     /**
      * Topic
      */
@@ -590,21 +359,6 @@ jQuery(document).ready(function($){
         }
     });
 
-    // Комментарии
-    $('.js-topic-comments, .js-topic-comments-list').lsComments({
-        urls: {
-            add:  aRouter['blog'] + 'ajaxaddcomment/',
-            load: aRouter['blog'] + 'ajaxresponsecomment/'
-        },
-        show_form:  ls.registry.get('comment_show_form'),
-        use_paging: ls.registry.get('comment_use_paging')
-    });
-
-    // Кнопка обновления комментариев
-    // TODO: Fix init
-    $('.js-comments-toolbar').lsCommentsToolbar({
-        comments: $('.js-topic-comments, .js-comments-talk')
-    });
 
 
     /**
@@ -626,17 +380,6 @@ jQuery(document).ready(function($){
     });
 
 
-    /**
-     * Стена
-     */
-    $('.js-wall-default').lsWall({
-        urls: {
-            add:           aRouter.ajax + 'wall/add/',
-            remove:        aRouter.ajax + 'wall/remove/',
-            load:          aRouter.ajax + 'wall/load/',
-            load_comments: aRouter.ajax + 'wall/load-comments/'
-        }
-    });
 
 
     /**

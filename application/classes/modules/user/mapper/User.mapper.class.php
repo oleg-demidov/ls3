@@ -640,30 +640,30 @@ class ModuleUser_MapperUser extends Mapper
      */
     public function GetCountUsersFriend($sUserId)
     {
-        $sql = "SELECT
-					count(*) as c
-				FROM
-					" . Config::Get('db.table.friend') . " as uf
-				WHERE
-					( uf.user_from = ?d
-					OR
-					uf.user_to = ?d )
-					AND
-					( 	uf.status_from + uf.status_to = ?d
-					OR
-						(uf.status_from = ?d AND uf.status_to = ?d )
-					)";
-        if ($aRow = $this->oDb->selectRow(
-            $sql,
-            $sUserId,
-            $sUserId,
-            ModuleUser::USER_FRIEND_ACCEPT + ModuleUser::USER_FRIEND_OFFER,
-            ModuleUser::USER_FRIEND_ACCEPT,
-            ModuleUser::USER_FRIEND_ACCEPT
-        )
-        ) {
-            return $aRow['c'];
-        }
+//        $sql = "SELECT
+//					count(*) as c
+//				FROM
+//					" . Config::Get('db.table.friend') . " as uf
+//				WHERE
+//					( uf.user_from = ?d
+//					OR
+//					uf.user_to = ?d )
+//					AND
+//					( 	uf.status_from + uf.status_to = ?d
+//					OR
+//						(uf.status_from = ?d AND uf.status_to = ?d )
+//					)";
+//        if ($aRow = $this->oDb->selectRow(
+//            $sql,
+//            $sUserId,
+//            $sUserId,
+//            ModuleUser::USER_FRIEND_ACCEPT + ModuleUser::USER_FRIEND_OFFER,
+//            ModuleUser::USER_FRIEND_ACCEPT,
+//            ModuleUser::USER_FRIEND_ACCEPT
+//        )
+//        ) {
+//            return $aRow['c'];
+//        }
         return 0;
     }
 
@@ -1049,16 +1049,16 @@ class ModuleUser_MapperUser extends Mapper
      */
     public function GetCountUserNotesByUserId($iUserId)
     {
-        $sql = "
-			SELECT count(*) as c
-			FROM
-				" . Config::Get('db.table.user_note') . "
-			WHERE
-				user_id = ?d
-			";
-        if ($aRow = $this->oDb->selectRow($sql, $iUserId)) {
-            return $aRow['c'];
-        }
+//        $sql = "
+//			SELECT count(*) as c
+//			FROM
+//				" . Config::Get('db.table.user_note') . "
+//			WHERE
+//				user_id = ?d
+//			";
+//        if ($aRow = $this->oDb->selectRow($sql, $iUserId)) {
+//            return $aRow['c'];
+//        }
         return 0;
     }
 

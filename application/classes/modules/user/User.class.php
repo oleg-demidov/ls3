@@ -157,7 +157,7 @@ class ModuleUser extends Module
     public function GetUsersAdditionalData($aUserId, $aAllowData = null)
     {
         if (is_null($aAllowData)) {
-            $aAllowData = array('vote', 'session', 'friend', 'geo_target', 'note');
+            $aAllowData = array( 'session',);
         }
         func_array_simpleflip($aAllowData);
         if (!is_array($aUserId)) {
@@ -173,7 +173,6 @@ class ModuleUser extends Module
         $aSessions = array();
         $aFriends = array();
         $aVote = array();
-        $aGeoTargets = array();
         $aNotes = array();
         if (isset($aAllowData['session'])) {
             $aSessions = $this->GetSessionsByArrayId($aUserId);
@@ -185,9 +184,7 @@ class ModuleUser extends Module
         if (isset($aAllowData['vote']) and $this->oUserCurrent) {
             $aVote = $this->Vote_GetVoteByArray($aUserId, 'user', $this->oUserCurrent->getId());
         }
-        if (isset($aAllowData['geo_target'])) {
-            $aGeoTargets = $this->Geo_GetTargetsByTargetArray('user', $aUserId);
-        }
+        
         if (isset($aAllowData['note']) and $this->oUserCurrent) {
             $aNotes = $this->GetUserNotesByArray($aUserId, $this->oUserCurrent->getId());
         }
@@ -211,12 +208,7 @@ class ModuleUser extends Module
             } else {
                 $oUser->setVote(null);
             }
-            if (isset($aGeoTargets[$oUser->getId()])) {
-                $aTargets = $aGeoTargets[$oUser->getId()];
-                $oUser->setGeoTarget(isset($aTargets[0]) ? $aTargets[0] : null);
-            } else {
-                $oUser->setGeoTarget(null);
-            }
+            
             if (isset($aAllowData['note'])) {
                 if (isset($aNotes[$oUser->getId()])) {
                     $oUser->setUserNote($aNotes[$oUser->getId()]);
@@ -451,20 +443,7 @@ class ModuleUser extends Module
     public function Shutdown()
     {
         if ($this->oUserCurrent) {
-            $this->Viewer_Assign('iUserCurrentCountTalkNew', $this->Talk_GetCountTalkNew($this->oUserCurrent->getId()));
-            $this->Viewer_Assign('iUserCurrentCountTopicDraft', $this->Topic_GetCountDraftTopicsByUserId($this->oUserCurrent->getId()));
-            $this->Viewer_Assign('iUserCurrentCountTopicDeferred', $this->Topic_GetCountDeferredTopicsByUserId($this->oUserCurrent->getId()));
-            $this->Viewer_Assign('iUserCurrentCountWall', $this->Wall_GetCountWall(array('wall_user_id' => $this->oUserCurrent->getId(), 'pid' => null)));
-            $this->Viewer_Assign('iUserCurrentCountFriends', $this->User_GetCountUsersFriend($this->oUserCurrent->getId()));
-
-            $iCountTopic = $this->Topic_GetCountTopicsPersonalByUser($this->oUserCurrent->getId(), 1);
-            $iCountComment = $this->Comment_GetCountCommentsByUserId($this->oUserCurrent->getId(), 'topic');
-            $iCountNote = $this->User_GetCountUserNotesByUserId($this->oUserCurrent->getId());
-            $this->Viewer_Assign('iUserCurrentCountCreated', $iCountTopic + $iCountComment + $iCountNote);
-
-            $iCountTopicFavourite = $this->Topic_GetCountTopicsFavouriteByUserId($this->oUserCurrent->getId());
-            $iCountCommentFavourite = $this->Comment_GetCountCommentsFavouriteByUserId($this->oUserCurrent->getId());
-            $this->Viewer_Assign('iUserCurrentCountFavourite', $iCountTopicFavourite + $iCountCommentFavourite);
+           
         }
         $this->Viewer_Assign('oUserCurrent', $this->oUserCurrent);
     }

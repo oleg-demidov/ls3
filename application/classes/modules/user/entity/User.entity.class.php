@@ -483,12 +483,12 @@ class ModuleUser_EntityUser extends Entity
             $iSize .= 'crop';
         }
 
-        if ($this->getProfileAvatar()) {
-            return $this->Media_GetImageWebPath($this->getProfileAvatar(), $iSize) . '?' . date('His', strtotime($this->getProfileDate()));
-        } else {
-            return $this->Media_GetImagePathBySize(Router::GetFixPathWeb(Config::Get('path.skin.assets.web')) . '/images/avatars/avatar_' . ($this->getProfileSex() == 'woman' ? 'female' : 'male') . '.png',
-                $iSize);
-        }
+//        if ($this->getProfileAvatar()) {
+//            return $this->Media_GetImageWebPath($this->getProfileAvatar(), $iSize) . '?' . date('His', strtotime($this->getProfileDate()));
+//        } else {
+//            return $this->Media_GetImagePathBySize(Router::GetFixPathWeb(Config::Get('path.skin.assets.web')) . '/images/avatars/avatar_' . ($this->getProfileSex() == 'woman' ? 'female' : 'male') . '.png',
+//                $iSize);
+//        }
     }
 
     /**
@@ -515,9 +515,9 @@ class ModuleUser_EntityUser extends Entity
      */
     public function getProfileFotoPath()
     {
-        if ($this->getProfileFoto()) {
-            return $this->Media_GetImageWebPath($this->getProfileFoto());
-        }
+//        if ($this->getProfileFoto()) {
+//            return $this->Media_GetImageWebPath($this->getProfileFoto());
+//        }
         return $this->getProfileFotoDefault();
     }
 

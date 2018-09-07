@@ -51,9 +51,9 @@ class ModuleMedia extends ModuleORM
     protected $oMapper = null;
 
     protected $aTargetTypes = array(
-        'topic'   => array(
-            'allow_preview' => true,
-        ),
+//        'topic'   => array(
+//            'allow_preview' => true,
+//        ),
         'comment' => array(),
         'blog'    => array(),
         'talk'    => array(),
@@ -1318,10 +1318,10 @@ class ModuleMedia extends ModuleORM
      */
     public function NotifyCreatePreviewTargetTopic($iTargetId, $oRelationTarget)
     {
-        if ($oTopic = $this->Topic_GetTopicById($iTargetId)) {
-            $oTopic->setPreviewImage($oRelationTarget->getDataOne('image_preview'));
-            $this->Topic_UpdateTopic($oTopic);
-        }
+//        if ($oTopic = $this->Topic_GetTopicById($iTargetId)) {
+//            $oTopic->setPreviewImage($oRelationTarget->getDataOne('image_preview'));
+//            $this->Topic_UpdateTopic($oTopic);
+//        }
     }
 
     /**
@@ -1333,10 +1333,10 @@ class ModuleMedia extends ModuleORM
      */
     public function NotifyRemovePreviewTargetTopic($iTargetId, $oRelationTarget)
     {
-        if ($oTopic = $this->Topic_GetTopicById($iTargetId)) {
-            $oTopic->setPreviewImage(null);
-            $this->Topic_UpdateTopic($oTopic);
-        }
+//        if ($oTopic = $this->Topic_GetTopicById($iTargetId)) {
+//            $oTopic->setPreviewImage(null);
+//            $this->Topic_UpdateTopic($oTopic);
+//        }
     }
 
     /**
@@ -1351,38 +1351,38 @@ class ModuleMedia extends ModuleORM
      */
     public function CheckTargetTopic($iTargetId, $sAllowType, $aParams)
     {
-        if (!$oUser = $aParams['user']) {
-            return false;
-        }
-        if (in_array($sAllowType,
-            array(self::TYPE_CHECK_ALLOW_ADD, self::TYPE_CHECK_ALLOW_PREVIEW, self::TYPE_CHECK_ALLOW_VIEW_LIST))) {
-            if (is_null($iTargetId)) {
-                /**
-                 * Разрешаем для всех новых топиков
-                 */
-                return true;
-            }
-            if ($oTopic = $this->Topic_GetTopicById($iTargetId)) {
-                /**
-                 * Проверяем права на редактирование топика
-                 */
-                if ($this->ACL_IsAllowEditTopic($oTopic, $oUser)) {
-                    /**
-                     * Дополнительно возможность исползования превью (настраивается отдельно для каждого типа топика)
-                     */
-                    if ($sAllowType == self::TYPE_CHECK_ALLOW_PREVIEW) {
-                        if ($oTopicType = $this->Topic_GetTopicType($oTopic->getType())) {
-                            if (!$oTopicType->getParam('allow_preview')) {
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
-                }
-            }
-        } else {
-            return $this->CheckStandartMediaAllow($sAllowType, $aParams);
-        }
+//        if (!$oUser = $aParams['user']) {
+//            return false;
+//        }
+//        if (in_array($sAllowType,
+//            array(self::TYPE_CHECK_ALLOW_ADD, self::TYPE_CHECK_ALLOW_PREVIEW, self::TYPE_CHECK_ALLOW_VIEW_LIST))) {
+//            if (is_null($iTargetId)) {
+//                /**
+//                 * Разрешаем для всех новых топиков
+//                 */
+//                return true;
+//            }
+//            if ($oTopic = $this->Topic_GetTopicById($iTargetId)) {
+//                /**
+//                 * Проверяем права на редактирование топика
+//                 */
+//                if ($this->ACL_IsAllowEditTopic($oTopic, $oUser)) {
+//                    /**
+//                     * Дополнительно возможность исползования превью (настраивается отдельно для каждого типа топика)
+//                     */
+//                    if ($sAllowType == self::TYPE_CHECK_ALLOW_PREVIEW) {
+//                        if ($oTopicType = $this->Topic_GetTopicType($oTopic->getType())) {
+//                            if (!$oTopicType->getParam('allow_preview')) {
+//                                return false;
+//                            }
+//                        }
+//                    }
+//                    return true;
+//                }
+//            }
+//        } else {
+//            return $this->CheckStandartMediaAllow($sAllowType, $aParams);
+//        }
         return false;
     }
     

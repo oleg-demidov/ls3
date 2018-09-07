@@ -9,7 +9,7 @@
 
 {$typeCode = $type->getCode()}
 
-{if $LS->Topic_IsAllowTopicType($typeCode)}
+{*if $LS->Topic_IsAllowTopicType($typeCode)}
     {$template = $LS->Component_GetTemplatePath('topic', "topic-add-type-{$typeCode}")}
 
     {if $template}
@@ -17,4 +17,4 @@
     {else}
         {component 'topic.add' params=$params}
     {/if}
-{/if}
+{/if*}

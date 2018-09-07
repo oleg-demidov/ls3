@@ -9,7 +9,7 @@
 
 {$type = $topic->getType()}
 
-{if $LS->Topic_IsAllowTopicType($type)}
+{*if $LS->Topic_IsAllowTopicType($type)}
     {$template = $LS->Component_GetTemplatePath('topic', "topic-type-{$type}")}
 
     {if $template}
@@ -17,4 +17,4 @@
     {else}
         {component 'topic' params=$params}
     {/if}
-{/if}
+{/if*}

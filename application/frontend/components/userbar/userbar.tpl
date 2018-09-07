@@ -14,9 +14,9 @@
             {if $oUserCurrent}
                 {$createMenu = []}
 
-                {foreach $LS->Topic_GetTopicTypes() as $type}
+                {*foreach $LS->Topic_GetTopicTypes() as $type}
                     {$createMenu[] = [ 'name' => $type->getCode(), 'text' => $type->getName(), 'url' => $type->getUrlForAdd() ]}
-                {/foreach}
+                {/foreach*}
 
                 {$createMenu[] = [ 'name' => 'blog', 'text' => {lang 'modal_create.items.blog'}, 'url' => {router page='blog/add'} ]}
                 {$createMenu[] = [ 'name' => 'talk', 'text' => {lang 'modal_create.items.talk'}, 'url' => {router page='talk/add'} ]}

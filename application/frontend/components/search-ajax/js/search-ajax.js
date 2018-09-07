@@ -56,7 +56,6 @@
                 _this._initFilter( value );
             });
 
-                       
             // Кнопка подгрузки
             this.elements.more.lsMore({
                 urls: {

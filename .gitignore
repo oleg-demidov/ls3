@@ -6,3 +6,4 @@
 /application/tmp/*
 /uploads/*
 /.idea/
+/nbproject
